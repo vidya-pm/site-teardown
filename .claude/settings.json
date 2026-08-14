@@ -1,0 +1,16 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(cd \"/c/Users/vidya/Claude work/avatar-based-advisor\" && ls examples modules && wc -l README.md)",
+      "Read(//c/Users/vidya/Claude work/avatar-based-advisor/**)",
+      "Bash(cd \"/c/Users/vidya/Claude work/avatar-based-advisor\" && cat examples/minimal.html)",
+      "Bash(cd \"/c/Users/vidya/Claude work/avatar-based-advisor\" && cat package.json)",
+      "Read(//c/Users/vidya/Claude work/avatar-based-advisor/modules/**)",
+      "Bash(mv README.md TALKINGHEAD_UPSTREAM.md)",
+      "Bash(mkdir -p examples-full-demo)",
+      "Bash(mv index.html examples-full-demo/index.html)",
+      "Bash(mv siteconfig.js examples-full-demo/siteconfig.js)",
+      "Bash(mv views *)"
+    ]
+  }
+}
