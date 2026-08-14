@@ -24,18 +24,3 @@ pricing signals, and messaging, grounded entirely in what's actually on the page
   keys never reach the browser
 - Model: `openai/gpt-oss-20b:free` via OpenRouter, with retry/backoff on rate limits
 
-## Setup
-
-1. `npm install`
-2. Create `.env.local` with:
-   ```
-   FIRECRAWL_API_KEY=...
-   OPENROUTER_API_KEY=...
-   ```
-3. `npm run dev`
-
-## Deploying
-
-Deploys to Vercel as-is (`api/teardown.ts` becomes a serverless function). Set
-`FIRECRAWL_API_KEY` and `OPENROUTER_API_KEY` in the Vercel project's environment
-variables.
