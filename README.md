@@ -1,32 +1,41 @@
-# React + TypeScript + Vite
+# Site Teardown 🔎
 
-This template provides a minimal setup to get React working in Vite with HMR and some Oxlint rules.
+Paste any product page — get back a structured teardown of its positioning, features,
+pricing signals, and messaging, grounded entirely in what's actually on the page.
 
-Currently, two official plugins are available:
+**Live**: https://site-teardown.vercel.app
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Oxc](https://oxc.rs)
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/)
+## How it works
 
-## React Compiler
+1. You give it a URL.
+2. [Firecrawl](https://firecrawl.dev) scrapes the page and returns clean markdown.
+3. That markdown is sent to an LLM via [OpenRouter](https://openrouter.ai), which is
+   instructed to extract a structured teardown **only from what's on the page** — no
+   invented features, pricing, or claims. Anything not stated is reported as such rather
+   than guessed.
+4. The result renders as a report: summary, value proposition, target audience, key
+   features, pricing signals, messaging tone, primary CTA, and notable claims/stats —
+   plus the raw scraped content for reference. Downloadable as a `.md` file.
 
-The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
+## Stack
 
-## Expanding the Oxlint configuration
+- React 19 + TypeScript + Vite, Tailwind CSS, Framer Motion for the report transitions
+- Vercel serverless function (`api/teardown.ts`) proxies Firecrawl + OpenRouter so API
+  keys never reach the browser
+- Model: `openai/gpt-oss-20b:free` via OpenRouter, with retry/backoff on rate limits
 
-If you are developing a production application, we recommend enabling type-aware lint rules by installing `oxlint-tsgolint` and editing `.oxlintrc.json`:
+## Setup
 
-```json
-{
-  "$schema": "./node_modules/oxlint/configuration_schema.json",
-  "plugins": ["react", "typescript", "oxc"],
-  "options": {
-    "typeAware": true
-  },
-  "rules": {
-    "react/rules-of-hooks": "error",
-    "react/only-export-components": ["warn", { "allowConstantExport": true }]
-  }
-}
-```
+1. `npm install`
+2. Create `.env.local` with:
+   ```
+   FIRECRAWL_API_KEY=...
+   OPENROUTER_API_KEY=...
+   ```
+3. `npm run dev`
 
-See the [Oxlint rules documentation](https://oxc.rs/docs/guide/usage/linter/rules) for the full list of rules and categories.
+## Deploying
+
+Deploys to Vercel as-is (`api/teardown.ts` becomes a serverless function). Set
+`FIRECRAWL_API_KEY` and `OPENROUTER_API_KEY` in the Vercel project's environment
+variables.
